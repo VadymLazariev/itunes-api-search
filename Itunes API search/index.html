@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Itunes Search</title>
+</head>
+<body>
+<div ng-app="myApp" ng-controller="myCtrl">
+    <div style="margin:50px; position:relative; text-align:center;">
+        <form class ="search-display" style="margin:auto;max-width:400px" >
+            <input ng-model="searchtext" pattern="^[a-z A-Z Аа-я А-Я]+$"  name="search" type="text"  placeholder="Search..." required>
+            <button ng-click="search(searchtext)" type="submit"><i style="color:grey;" class="fa fa-search"></i></button>
+        </form>
+    </div>  
+    <div class="margin-display" >
+        <div class="panel-group" id="accordion" >
+            <div class="panel panel-default" ng-repeat="band in bands">
+                <div ng-class="$even ? 'odd' : 'even'">
+                    <h4 class="panel-title">
+                        <div id="divColapse"  ng-click="changeClass($index);loadBandInfo($index);changeAfterCollapse($index)" data-toggle="collapse" data-parent="#accordion" ng-href="#collapse{{band.index}}" > 
+                            <img ng-src="{{band.image}}" alt=""> 
+                            <p class="output">{{band.artist}}</p>
+                            <p class="output">{{band.track}}</p>  
+                            <p class="output">{{band.collection}}</p>  
+                            <p class="output">{{band.genre}}</p>    
+                            <span id="plusminusicon" ng-class="band.cssClass"></span> 
+                        </div>
+                    </h4>
+                </div>
+                <div ng-attr-id="collapse{{band.index}}" class="panel-collapse collapse">
+                    <div class="panel-body" ng-class="$even ? 'odd' : 'even'" >
+                        <div>
+                            <h3 class="additional-display">{{band.artist}} - {{band.track}} <span class="glyphicon glyphicon-music"></span> </h3>
+                            <p class="additional-display"><strong>Collection: </strong> {{band.collection}}</p>  
+                            <p class="additional-display"><strong>Track Count: </strong>{{bandInfo[0].trackAmount}}</p>  
+                            <p class="additional-display"><strong>Price: </strong>{{bandInfo[0].collPrice}} USD</p>  
+                            <p class="additional-display-right"><strong>Duration: </strong>{{bandInfo[0].trackDuration | date:'mm:ss'}} min</p> 
+                            <p class="additional-display-right"><strong>Track Price: </strong>{{bandInfo[0].priceForTrack}}</p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
